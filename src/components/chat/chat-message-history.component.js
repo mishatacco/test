@@ -1,10 +1,16 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 
 import ChatMessageComponent from './chat-message.component';
 
-const ChatMessagesHistoryComponent = ({messages}) => {
-    const chatMessagesComponent = messages.map((message, index) => {
-        return <li className="list-group-item"><ChatMessageComponent id={index} username={message.username} message={message.message} timestamp={message.timestamp} /></li>
+const ChatMessagesHistoryComponent = () => {
+    const {messages} = useSelector(state => state.chatReducer);
+
+    const chatMessagesComponent = messages.map((message) => {
+        return <li className="list-group-item"><ChatMessageComponent key={message.id}
+                                                                     username={message.username}
+                                                                     message={message.message}
+                                                                     timestamp={message.timestamp}/></li>
     });
 
     return (<ul className="list-group chat">{chatMessagesComponent}</ul>);

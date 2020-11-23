@@ -9,8 +9,9 @@ import {logoutAction} from './actions/auth.action';
 import {clearMessage} from './actions/message.action';
 import Chat from './pages/chat';
 import Home from './pages/home';
-import Profile from './pages/profile';
 import Login from './pages/login';
+import Profile from './pages/profile';
+import Register from './pages/register';
 import {history} from './router-helper';
 
 const App = () => {
@@ -18,7 +19,7 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        history.listen((location) => {
+        history.listen((_location) => {
             dispatch(clearMessage());
         });
     }, [dispatch]);
@@ -64,7 +65,13 @@ const App = () => {
                                     Login
                                 </Link>
                             </li>
+                            <li className="nav-item">
+                                <Link to={"/register"} className="nav-link">
+                                    Sign Up
+                                </Link>
+                            </li>
                         </div>
+
                     )}
                 </nav>
 
@@ -72,6 +79,7 @@ const App = () => {
                     <Switch>
                         <Route exact path={["/", "/home"]} component={Home}/>
                         <Route exact path="/login" component={Login}/>
+                        <Route exact path="/register" component={Register} />
                         <Route exact path="/profile" component={Profile}/>
                         <Route exact path="/chat" component={Chat}/>
                     </Switch>

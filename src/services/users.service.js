@@ -1,37 +1,19 @@
-export const users = [
-    {
-        username: 'matt@mail.com',
-        firstName: 'Matt',
-        lastName: 'Damon',
-        email: 'matt@mail.com',
-        password: 'Qwqfgfreere44'
-    },
-    {
-        username: 'bob@mail.com',
-        firstName: 'Bob',
-        lastName: 'Salter',
-        email: 'bob@mail.com',
-        password: 'Qfdfdfreere44'
-    },
-    {
-        username: 'john@mail.com',
-        firstName: 'John',
-        lastName: 'Smith',
-        email: 'john@mail.com',
-        password: 'Qwqrereeere44'
-    }
-];
+import db from '../db';
 
-
-export const getUserByEmail = (username) => {
-    return users.find((user) => user.username === username)
+export const getUserByEmail = (email) => {
+    return db.table('users')
+        .where('email').equals(email)
+        .first();
 };
 
-export const isUserRegistered = (username, password) => {
-    const user = getUserByEmail(username);
-    return user? user.password === password : false;
+export const getRegisteredUser = (username, password) => {
+    return db.table('users')
+        .filter((user) => {
+            return user.username === username && user.password === password
+        })
+        .first();
 };
 
 export const getAllUsers = () => {
-    return users;
+    return db.table('users').toArray();
 };

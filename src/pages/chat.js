@@ -1,14 +1,12 @@
-import moment from 'moment';
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
-import {addChatMessage} from '../actions/chat.action';
+import {addChatMessageAction} from '../actions/chat.action';
 import ChatMessagesHistoryComponent from '../components/chat/chat-message-history.component';
 
 const Chat = () => {
     const {user: currentUser} = useSelector((state) => state.authReducer);
-    const {messages} = useSelector(state => state.chatReducer);
 
     const [nextInputText, setNextInputText] = useState('');
 
@@ -21,10 +19,8 @@ const Chat = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const timestamp = moment().format('LLLL')
-        const updatedMessages = messages.concat([{username: currentUser.username, message: nextInputText, timestamp}]);
         setNextInputText('');
-        dispatch(addChatMessage(updatedMessages))
+        dispatch(addChatMessageAction(nextInputText, currentUser.username));
     };
 
     const onChange = (event) => {
@@ -33,7 +29,7 @@ const Chat = () => {
 
     return (
         <div className="card">
-            <ChatMessagesHistoryComponent messages={messages}/>
+            <ChatMessagesHistoryComponent key={1}/>
             <div className="card-footer">
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">

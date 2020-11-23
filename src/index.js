@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import store from './store';
 
 import App from './app';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import {loadChatMessageAction} from './actions/chat.action';
+import store from './store';
+
+store.dispatch(loadChatMessageAction());
 
 ReactDOM.render(
     <Provider store={store}>

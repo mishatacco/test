@@ -12,7 +12,7 @@ const Home = () => {
     }
 
     return (
-        <UserListComponent className="user-list" />
+        <UserListComponent className="user-list"/>
     );
 };
 

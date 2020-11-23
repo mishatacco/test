@@ -7,8 +7,10 @@ import CheckButton from 'react-validation/build/button';
 import {loginAction} from '../actions/auth.action';
 import {clearMessage} from '../actions/message.action';
 
+const clearFieldValue = (value) => value.toString().trim();
+
 const required = (value) => {
-    if (!value) {
+    if (!clearFieldValue(value)) {
         return (
             <div className="alert alert-danger" role="alert">
                 This field is required!
@@ -29,15 +31,17 @@ const Login = (props) => {
 
     const dispatch = useDispatch();
 
+
+
     const onChangeUsername = (event) => {
         const username = event.target.value;
-        setUsername(username);
+        setUsername(clearFieldValue(username));
         dispatch(clearMessage());
     };
 
     const onChangePassword = (event) => {
         const password = event.target.value;
-        setPassword(password);
+        setPassword(clearFieldValue(password));
         dispatch(clearMessage());
     };
 
@@ -112,7 +116,7 @@ const Login = (props) => {
                             </div>
                         </div>
                     )}
-                    <CheckButton style={{display: "none"}} ref={checkBtn}/>
+                    <CheckButton style={{display: 'none'}} ref={checkBtn}/>
                 </Form>
             </div>
         </div>

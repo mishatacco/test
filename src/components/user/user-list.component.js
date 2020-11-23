@@ -1,20 +1,32 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import UserComponent from './user.component';
 import {getAllUsers} from '../../services/users.service';
 
 const UserListComponent = () => {
-    const users = getAllUsers();
+    const [users, setUsers] = useState([]);
 
-    const chatMessagesComponent = users.map((user, index) => {
-        return <li className="list-group-item"><UserComponent id={index}
+    useEffect(() => {
+        getAllUsers()
+            .then(
+            (response) => {
+                setUsers(response);
+            },
+            (_error) => {
+                setUsers([]);
+            }
+        );
+    }, []);
+
+    const userComponent = users.map((user) => {
+        return <li className="list-group-item"><UserComponent key={user.email}
                                                               username={user.username}
                                                               firstName={user.firstName}
                                                               lastName={user.lastName}
-                                                              email={user.email}/></li>
+                                                              email={user.email} /></li>
     });
 
-    return (<ul className="list-group justify-content-center user-list">{chatMessagesComponent}</ul>);
+    return (<ul className="list-group justify-content-center user-list">{userComponent}</ul>);
 }
 
 export default UserListComponent;

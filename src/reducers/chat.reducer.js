@@ -1,18 +1,17 @@
-import {ADD_CHAT_MESSAGE} from '../actions/types';
-import {chatMessages} from '../services/chat.service';
+import {ADD_CHAT_MESSAGE, LOAD_CHAT_MESSAGE} from '../actions/types';
 
-const messages = chatMessages;
-
-const initialState = messages
-    ? {messages}
-    : {messages: null};
+const initialState = {messages: []};
 
 export function chatReducer(state = initialState, action) {
     const {type, payload} = action;
 
     switch (type) {
-        case ADD_CHAT_MESSAGE:
+        case LOAD_CHAT_MESSAGE:
             return {messages: payload};
+        case ADD_CHAT_MESSAGE:
+            return Object.assign({}, state, {
+                messages: state.messages.concat([payload])
+            });
         default:
             return state;
     }
